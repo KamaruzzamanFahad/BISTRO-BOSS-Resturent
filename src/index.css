@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bgfeatcherimg {
+   background-image: url('/src/assets/home/featured.jpg');
+}
+
+.active {
+   color: #EEFF25;
+}
+
+.cinzel {
+   font-family: "Cinzel", serif;
+}

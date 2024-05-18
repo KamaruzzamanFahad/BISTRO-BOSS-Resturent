@@ -16,7 +16,7 @@ const Swipe = () => {
                 clickable: true,
             }}
             modules={[Pagination]}
-            className="mySwiper"
+            className="mySwiper w-full"
         >
             <SwiperSlide>
             <img src={slide1} alt="" />
