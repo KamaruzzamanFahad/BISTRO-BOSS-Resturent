@@ -30,6 +30,8 @@ const Home = () => {
             })
     }, [])
 
+    console.log(import.meta.env.VITE_projectId)
+
     return (
         <div >
             <Helmet>
