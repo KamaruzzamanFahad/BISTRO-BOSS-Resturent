@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import bg from '../assets/others/logregibg.png'
 import img from '../assets/others/logregiimg.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
@@ -9,6 +9,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 const Login = () => {
     const [disable,setdesable] = useState(true)
     const {LoginWithEmail} = useContext(AuthContext)
+    // const returnpath = useLocation();
 
     const bgimg = {
         backgroundImage: `url(${bg})`,

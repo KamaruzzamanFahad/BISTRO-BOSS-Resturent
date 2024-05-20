@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import bg from "../assets/others/logregibg.png";
 import img from "../assets/others/logregiimg.png";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { CreateUserByEmail } = useContext(AuthContext);
+  const { CreateUserByEmail,Upddateuserinfo } = useContext(AuthContext);
   const bgimg = {
     backgroundImage: `url(${bg})`,
     backgroundSize: "cover", // Adjust as needed
@@ -20,7 +22,12 @@ const Register = () => {
     const Password = from.Password.value;
 
     CreateUserByEmail(email, Password)
-      .then((result) => { console.log(result);})
+      .then((result) => { 
+        console.log(result);
+        Upddateuserinfo(name)
+        .then(res => console.log('update', res))
+        .catch(error => console.log('not updated', error))
+    })
       .catch((error) => { console.log(error);});
 
   };

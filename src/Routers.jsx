@@ -8,6 +8,7 @@ import Menu from "./Pages/Menu";
 import OurShop from "./Pages/OurShop";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import PrivateLogRegi from "./PrivateRouts/PrivateLogRegi";
 
 export const router = createBrowserRouter([
     {
@@ -30,10 +31,10 @@ export const router = createBrowserRouter([
     },
     {
         path: '/login',
-        element:<Login></Login>
+        element:<PrivateLogRegi><Login></Login></PrivateLogRegi>
     },
     {
         path: '/register',
-        element:<Register></Register>
+        element:<PrivateLogRegi><Register></Register></PrivateLogRegi>
     },
 ])

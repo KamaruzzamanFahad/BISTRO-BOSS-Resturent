@@ -51,7 +51,7 @@ const Home = () => {
                 <div className='grid grid-cols-2 gap-5'>
                     {
                         menu.map((item, i) => (
-                            <Menus item={item}
+                            <Menus key={i} item={item}
 
                             ></Menus>
                         ))
@@ -107,7 +107,7 @@ const Home = () => {
 
                     {
                         reviews.map((item, i) => (
-                            <SwiperSlide>
+                            <SwiperSlide key={i}>
                                 <div className='flex flex-col justify-center items-center mb-40'>
                                     <Rating
                                         placeholderRating={item.rating}
