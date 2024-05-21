@@ -9,7 +9,9 @@
 .active {
    color: #EEFF25;
 }
-
+.bashbord > .active{
+   color: white;
+}
 .cinzel {
    font-family: "Cinzel", serif;
 }

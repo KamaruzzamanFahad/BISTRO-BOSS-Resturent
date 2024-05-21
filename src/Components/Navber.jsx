@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import cardicon from "../assets/icon/cardicon.png";
 import profileicon from "../assets/icon/profile.png";
 import { AuthContext } from "../Provider/AuthProvider";
+import useCart from "../hooks/useCart";
 
 const Navber = () => {
   const { Logout } = useContext(AuthContext);
+  const [cart] = useCart();
   const links = (
     <>
       <NavLink activeclassname="active" to={"/"}>
@@ -60,12 +62,16 @@ const Navber = () => {
           <ul className="menu gap-5 menu-horizontal px-1 uppercase">{links}</ul>
         </div>
         <div className="navbar-end flex justify-center items-center gap-2 ">
-          <div className="indicator">
-            <span className="indicator-item mb-3 mr-3 indicator-bottom badge bg-red-500">0</span>
-            <div className="grid place-items-center">
-              <img src={cardicon} alt="" className="w-12" />
+          <Link to={"/dashboard/cart"} className="mr-3">
+            <div className="indicator">
+              <span className="indicator-item mb-3 mr-3 indicator-bottom badge bg-red-500">
+                +{cart.length}
+              </span>
+              <div className="grid place-items-center">
+                <img src={cardicon} alt="" className="w-12" />
+              </div>
             </div>
-          </div>
+          </Link>
           <button onClick={Logout} className="bg-transparent">
             SIGN OUT
           </button>

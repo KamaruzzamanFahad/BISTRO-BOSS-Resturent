@@ -9,6 +9,9 @@ import OurShop from "./Pages/OurShop";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import PrivateLogRegi from "./PrivateRouts/PrivateLogRegi";
+import DashBoard from "./DashBoard/DashBoard";
+import DashboardHome from "./DashBoard/Pages/DashboardHome";
+import Cart from "./DashBoard/Pages/Cart";
 
 export const router = createBrowserRouter([
     {
@@ -36,5 +39,19 @@ export const router = createBrowserRouter([
     {
         path: '/register',
         element:<PrivateLogRegi><Register></Register></PrivateLogRegi>
+    },
+    {
+        path:'/dashboard',
+        element:<DashBoard></DashBoard>,
+        children:[
+            {
+                path:'/dashboard',
+                element:<DashboardHome></DashboardHome>
+            },
+            {
+                path:'/dashboard/cart',
+                element:<Cart></Cart>
+            },
+        ]
     },
 ])

@@ -5,11 +5,13 @@ import { useNavigate } from "react-router-dom";
 import useAxiousSecure from "../../hooks/useAxiousSecure";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useCart from "../../hooks/useCart";
 const ItemCard = (items) => {
   const menu = items.items;
   const { user } = useContext(AuthContext);
   const goto = useNavigate();
   const axiosSecure = useAxiousSecure();
+  const [,refetch] = useCart()
 
 
   const handleclick = (item) => {
@@ -31,8 +33,8 @@ const ItemCard = (items) => {
             text: "Item Added to The cart!",
             icon: "success"
           });
+          refetch()
         }
-        console.log(res.data)
       })
     }
     else{
