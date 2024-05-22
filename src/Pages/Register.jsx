@@ -3,9 +3,11 @@ import bg from "../assets/others/logregibg.png";
 import img from "../assets/others/logregiimg.png";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
+import { axiosPublic } from "../hooks/useAxiousPublic";
 
 const Register = () => {
-  const { CreateUserByEmail,Upddateuserinfo } = useContext(AuthContext);
+  const { CreateUserByEmail, Upddateuserinfo } = useContext(AuthContext);
   const bgimg = {
     backgroundImage: `url(${bg})`,
     backgroundSize: "cover", // Adjust as needed
@@ -22,14 +24,23 @@ const Register = () => {
     const Password = from.Password.value;
 
     CreateUserByEmail(email, Password)
-      .then((result) => { 
+      .then((result) => {
         console.log(result);
         Upddateuserinfo(name)
-        .then(res => console.log('update', res))
-        .catch(error => console.log('not updated', error))
-    })
-      .catch((error) => { console.log(error);});
-
+          .then((res) => {
+            console.log("update", res);
+            const user = {
+              name: name,
+              email: email,
+            };
+            axiosPublic.post("users", user)
+            .then(res => console.log('user created',res.data))
+          })
+          .catch((error) => console.log("not updated", error));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
