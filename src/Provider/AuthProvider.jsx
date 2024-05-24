@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { createContext, useState } from "react";
 import app from "../fireconfig";
+import { axiosSecure } from "../hooks/useAxiousSecure";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -37,9 +38,14 @@ const AuthProvider = ({ children }) => {
     if (user) {
       console.log(user);
       setuser(user);
+      axiosSecure.post("/jwt", user.email).then((res) => {
+        localStorage.setItem("acces-token", res.data);
+        console.log("token is ", res.data);
+      });
     } else {
       console.log("logout");
       setuser(null);
+      localStorage.removeItem('acces-token')
     }
   });
 

@@ -6,7 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import useCart from "../hooks/useCart";
 
 const Navber = () => {
-  const { Logout } = useContext(AuthContext);
+  const { Logout, user } = useContext(AuthContext);
   const [cart] = useCart();
   const links = (
     <>
@@ -72,9 +72,15 @@ const Navber = () => {
               </div>
             </div>
           </Link>
-          <button onClick={Logout} className="bg-transparent">
-            SIGN OUT
-          </button>
+          {user ? (
+            <button onClick={Logout} className="bg-transparent">
+              SIGN OUT
+            </button>
+          ) : (
+            <Link to={"/login"}>
+              <button className="bg-transparent">LOG IN</button>
+            </Link>
+          )}
           <img src={profileicon} alt="" className="w-12" />
         </div>
       </div>
