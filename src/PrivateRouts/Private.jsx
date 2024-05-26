@@ -8,11 +8,9 @@ const PrivateRout = ({ children }) => {
   if (loooding) {
     return <span className="loading loading-spinner text-error"></span>;
   } else if (user) {
-    console.log("user got");
     return children;
   } else {
     goto("/login");
-    console.log("user not");
     return <Navigate to={"/login"}></Navigate>; 
   }
 };

@@ -15,3 +15,7 @@
 .cinzel {
    font-family: "Cinzel", serif;
 }
+.buttonbg {
+   background: linear-gradient(90deg, #835D23 0%, #B58130 100%);
+   margin-top: 20px;
+}

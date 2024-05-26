@@ -36,16 +36,15 @@ const AuthProvider = ({ children }) => {
   onAuthStateChanged(auth, (user) => {
     setlooding(false);
     if (user) {
-      console.log(user);
       setuser(user);
-      axiosSecure.post("/jwt", user.email).then((res) => {
+      const email= user.email;
+      axiosSecure.post("/jwt",{email})
+      .then((res) => {
         localStorage.setItem("acces-token", res.data);
-        console.log("token is ", res.data);
       });
     } else {
-      console.log("logout");
       setuser(null);
-      localStorage.removeItem('acces-token')
+      localStorage.removeItem("acces-token");
     }
   });
 

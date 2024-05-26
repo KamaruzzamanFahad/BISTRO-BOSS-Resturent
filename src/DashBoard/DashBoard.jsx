@@ -10,9 +10,15 @@ import { FaShoppingBag } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { CiForkAndKnife } from "react-icons/ci";
 import { ImSpoonKnife } from "react-icons/im";
+import useAdmin from "../hooks/useAdmin";
 
 const DashBoard = () => {
-  const isAdmin = true;
+  
+  const [Admina, refetch] = useAdmin();
+  const isAdmin = Admina;
+  console.log(Admina);
+ 
+
   return (
     <div className="flex">
       <div className="w-96 cinzel bg-[#D1A054] p-10 bashbord h-[100vh]">
