@@ -73,7 +73,7 @@ const Login = () => {
                             <label htmlFor="" className='mb-2 font-semibold'></label>
                             <input onChange={handlechange} type="text" name="captcha" placeholder='Type here' id="" className='w-96 p-4 outline-none rounded-md border-[1px]' />
                         </div>
-                        <button disabled={disable} className='bg-[#d19f54cb] w-96 p-4 mt-4 rounded-md font-bold text-white'>Sign In</button>
+                        <button /*disabled={disable}*/ className='bg-[#d19f54cb] w-96 p-4 mt-4 rounded-md font-bold text-white'>Sign In</button>
                         <div>
                             <p className='mt-3 text-center w-96 text-[#d19f54cb]'>New here?<Link to={'/register'}> <span className='font-bold'> Create a New Account</span></Link></p>
                             <p className='w-96 text-center mt-2 font-semibold text-[#0404047e] mb-2'>Or sign in with</p>

@@ -14,40 +14,40 @@ const AddItems = () => {
         register,
         handleSubmit,
         watch,
+        reset ,
         formState: { errors },
     } = useForm()
 
     const onSubmit = async (data) => {
-        // const menuitem = {
-        //     name: data.RecipeName,
-        //     recipe: data.RecipeDetails,
-        //     category: data.Category,
-        //     price: data.Price,
-        //     // image: res.data.data.display_url,
-        // }
-        console.log(data)
+        console.log(data.image[0])
+        const Image = { image: data.image[0] };
+        const res = await axiosPublic.post(ImgBBApi, Image, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        console.log(res.data.data.display_url)
+        if (res.data.success) {
+            const menuitem = {
+                name: data.recipename,
+                recipe: data.detils,
+                category: data.category,
+                price: data.price,
+                image: res.data.data.display_url,
+            }
+            console.log(menuitem)
 
-
-        // console.log(data.image[0])
-        // const Image = { image: data.image[0] };
-        // const res = await axiosPublic.post(ImgBBApi, Image, {
-        //     headers: {
-        //         'content-type': 'multipart/form-data'
-        //     }
-        // })
-        // console.log(res.data.data.display_url)
-        // if (res.data.success) {
-
-        //     const menures = await axiosSecure.post('/menu', menuitem)
-        //     console.log(menures.data)
-        //     if (menures.data.insertedId) {
-        //         Swal.fire({
-        //             title: "Good job!",
-        //             text: "Menu Item is Added!",
-        //             icon: "success"
-        //         });
-        //     }
-        // }
+            const menures = await axiosSecure.post('/menu', menuitem)
+            console.log(menures.data)
+            if (menures.data.insertedId) {
+                reset()
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Menu Item is Added!",
+                    icon: "success"
+                });
+            }
+        }
     }
     const refar = useRef()
     console.log(refar)
@@ -72,21 +72,21 @@ const AddItems = () => {
                 </div>
                 <div>
                     <h2 className='mb-2 font-semibold'>Price*</h2>
-                    <input {...register('Price')} required className='w-full p-2 outline-none' type="text" placeholder='Price' />
+                    <input {...register('price')} required className='w-full p-2 outline-none' type="text" placeholder='Price' />
                 </div>
                 <div className='md:col-span-2'>
                     <h2 className='mb-2 font-semibold'>Recipe Details*</h2>
-                    <textarea {...register('RecipeDetails')} required className='w-full p-2 outline-none' name="detils" cols="30" rows="5" placeholder='Enter Recipe Details'></textarea>
+                    <textarea {...register('detils')} required className='w-full p-2 outline-none' cols="30" rows="5" placeholder='Enter Recipe Details'></textarea>
 
                 </div>
                 <div className='flex flex-col'>
-                    {/* <input {...register('image')} required type="file" name="image" className='file-input text-red-500 bg-green-500 ' /> */}
+                    <input {...register('image')} required type="file" name="image" className='file-input ' />
 
-                    <button type='button' className='' onClick={() => {
+                    {/* <button type='button' className='' onClick={() => {
                         refar.current.click()
                         console.log(refar)
                     }}>chose</button>
-                    <input ref={refar}  type="file" />
+                    <input ref={refar}  type="file" /> */}
 
 
                     <button type='submit' className='buttonbg flex p-3 rounded-sm w-40 items-center justify-center text-white gap-2 font-bold text-xl'>Add Item
