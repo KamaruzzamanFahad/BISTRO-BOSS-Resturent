@@ -17,6 +17,7 @@ import AllUsers from "./DashBoard/Pages/AdminPages/AllUsers";
 import PrivateAdmin from "./DashBoard/PrivateRouts/PrivateAdmin";
 import AddItems from "./DashBoard/Pages/AdminPages/AddItems";
 import ManageItem from "./DashBoard/Pages/AdminPages/ManageItem";
+import Payment from "./DashBoard/Pages/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/cart',
                 element: <PrivateRout><Cart></Cart></PrivateRout>
+            },
+            {
+                path: '/dashboard/pay',
+                element: <PrivateRout><Payment></Payment></PrivateRout>
             },
 
 

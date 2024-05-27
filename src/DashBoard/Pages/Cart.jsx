@@ -5,6 +5,7 @@ import useCart from "../../hooks/useCart";
 import useAxiousSecure, { axiosSecure } from "../../hooks/useAxiousSecure";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [cart, refetch] = useCart();
@@ -46,9 +47,12 @@ const Cart = () => {
         <div className="cinzel text-3xl font-bold flex items-center justify-between">
           <h1>Total orders: {cart.length}</h1>
           <h1>total price: ${totalprice}</h1>
-          <button className="uppercase text-xl bg-[#D1A054] p-2 rounded-lg text-white">
-            Pay
-          </button>
+
+          <Link to={'/dashboard/pay'}>
+            <button className="uppercase text-xl bg-[#D1A054] p-2 rounded-lg text-white">
+              Pay
+            </button>
+          </Link>
         </div>
 
         <div className=" rounded-2xl bg-[#D1A054] mt-4 pt-[1px]">
