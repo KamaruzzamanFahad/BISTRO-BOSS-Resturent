@@ -11,9 +11,10 @@ const CheckoutFrom = () => {
     const [clientSecret, setclientSecret] = useState('')
     const [tranjectionid, settranjectionid] = useState('')
     const axiosSecure = useAxiousSecure();
-    const [cart] = useCart()
+    const [cart, refetch] = useCart()
     const { user } = useContext(AuthContext)
     const price = cart.reduce((total, item) => total + item.price, 0)
+
     console.log(price)
     useEffect(() => {
         if (price != 0) {
@@ -67,6 +68,27 @@ const CheckoutFrom = () => {
             console.log('payment intent: ', paymentIntent)
             if (paymentIntent.status == 'succeeded') {
                 settranjectionid(paymentIntent.id)
+
+
+                const paymentdoc = {
+                    email: user.email,
+                    price: price,
+                    date: new Date(),
+                    cartIds: cart.map(item => item._id),
+                    menuIds: cart.map(item => item.menuId),
+                    status: 'pending',
+
+                }
+                axiosSecure.post('/payment', paymentdoc)
+                    .then(res => {
+                        if (res.data.deletresuult.deletedCount > 0 && res.data.paymentresult.insertedId) {
+                            console.log('redirect')
+                        }
+                        console.log(res.data)
+                        refetch()
+
+                    })
+
             }
         }
     }
@@ -92,7 +114,7 @@ const CheckoutFrom = () => {
             <button type='submit' disabled={!stripe || !clientSecret} className='btn bg-purple-600 w-60'>Pay</button>
             <p className='text-red-500'>{error}</p>
             {
-                tranjectionid? <p className='text-green-500'>{tranjectionid}</p> : ''
+                tranjectionid ? <p className='text-green-500'>{tranjectionid}</p> : ''
             }
         </form>
 
