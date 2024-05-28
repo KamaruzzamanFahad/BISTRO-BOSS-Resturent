@@ -1,10 +1,29 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import useAxiousSecure from '../../hooks/useAxiousSecure';
+import useCart from '../../hooks/useCart';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const CheckoutFrom = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const [error,seterror] = useState('');
+    const [error, seterror] = useState('');
+    const [clientSecret, setclientSecret] = useState('')
+    const [tranjectionid, settranjectionid] = useState('')
+    const axiosSecure = useAxiousSecure();
+    const [cart] = useCart()
+    const { user } = useContext(AuthContext)
+    const price = cart.reduce((total, item) => total + item.price, 0)
+    console.log(price)
+    useEffect(() => {
+        if (price != 0) {
+            axiosSecure.post('/create-payment-intent', { price })
+                .then(res => {
+                    setclientSecret(res.data.clientSecret)
+                    console.log(res.data.clientSecret)
+                })
+        }
+    }, [price])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,11 +41,33 @@ const CheckoutFrom = () => {
             card,
         })
         if (error) {
-            console.log('error : ',error)
+            console.log('error : ', error)
             seterror(error.message)
         } else {
-            console.log('payment methode: ',paymentMethod)
+            console.log('payment methode: ', paymentMethod)
             seterror('')
+        }
+
+
+        // conferm payment
+        const { paymentIntent, erra } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    email: user.email,
+                    name: user.displayName,
+
+                }
+            }
+        })
+        if (erra) {
+            console.log('error is: ', erra)
+        }
+        else {
+            console.log('payment intent: ', paymentIntent)
+            if (paymentIntent.status == 'succeeded') {
+                settranjectionid(paymentIntent.id)
+            }
         }
     }
     return (
@@ -48,8 +89,11 @@ const CheckoutFrom = () => {
                     },
                 }}
             />
-            <button type='submit' disabled={!stripe} className='btn bg-purple-600 w-60'>Pay</button>
+            <button type='submit' disabled={!stripe || !clientSecret} className='btn bg-purple-600 w-60'>Pay</button>
             <p className='text-red-500'>{error}</p>
+            {
+                tranjectionid? <p className='text-green-500'>{tranjectionid}</p> : ''
+            }
         </form>
 
     );
