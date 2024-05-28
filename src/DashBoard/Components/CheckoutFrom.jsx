@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useAxiousSecure from '../../hooks/useAxiousSecure';
 import useCart from '../../hooks/useCart';
 import { AuthContext } from '../../Provider/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutFrom = () => {
     const stripe = useStripe();
@@ -14,7 +15,7 @@ const CheckoutFrom = () => {
     const [cart, refetch] = useCart()
     const { user } = useContext(AuthContext)
     const price = cart.reduce((total, item) => total + item.price, 0)
-
+    const goto = useNavigate()
     console.log(price)
     useEffect(() => {
         if (price != 0) {
@@ -77,12 +78,14 @@ const CheckoutFrom = () => {
                     cartIds: cart.map(item => item._id),
                     menuIds: cart.map(item => item.menuId),
                     status: 'pending',
+                    tranjectionid: paymentIntent.id,
 
                 }
                 axiosSecure.post('/payment', paymentdoc)
                     .then(res => {
                         if (res.data.deletresuult.deletedCount > 0 && res.data.paymentresult.insertedId) {
                             console.log('redirect')
+                            goto('/dashboard/paymenthistory')
                         }
                         console.log(res.data)
                         refetch()
